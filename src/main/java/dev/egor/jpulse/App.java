@@ -3,8 +3,7 @@ package dev.egor.jpulse;
 import com.sun.net.httpserver.HttpServer;
 import dev.egor.jpulse.api.HealthHandler;
 import dev.egor.jpulse.api.RootHandler;
-import dev.egor.jpulse.metrics.JvmMetricsReader;
-import dev.egor.jpulse.metrics.MetricSnapshot;
+import dev.egor.jpulse.metrics.MetricsCollector;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -19,8 +18,7 @@ public class App {
         server.start();
         System.out.println("J-Pulse running on http://localhost:8080");
 
-        JvmMetricsReader reader = new JvmMetricsReader();
-        MetricSnapshot s = reader.read();
-        System.out.printf("Heap: %d / %d MB | CPU: %.1f%% | Threads: %d | GC: %d%n", s.heapUsedMb(), s.heapMaxMb(), s.cpuPercent(), s.threadCount(), s.gcCount());
+        MetricsCollector collector = new MetricsCollector();
+        collector.start();
     }
 }
