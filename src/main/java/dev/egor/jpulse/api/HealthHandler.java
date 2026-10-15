@@ -29,8 +29,11 @@ public class HealthHandler implements HttpHandler {
         byte[] body = json.getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
         exchange.sendResponseHeaders(status, body.length);
-        try (OutputStream out = exchange.getResponseBody()) {
+        OutputStream out = exchange.getResponseBody();
+        try {
             out.write(body);
+        } finally {
+            out.close();
         }
     }
 }

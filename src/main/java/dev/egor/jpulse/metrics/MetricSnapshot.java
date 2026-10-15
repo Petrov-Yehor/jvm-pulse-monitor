@@ -2,11 +2,10 @@ package dev.egor.jpulse.metrics;
 
 public record MetricSnapshot(
     long timestamp,     
-    long heapUsed,      
-    long heapMax,      
-    double processCpu,  
+    long heapUsedMb,    
+    long heapMaxMb,     
+    double cpuPercent,  
     int threadCount,    
-    long gcCount,       
-    long gcTimeMs       
+    long gcCount        
 ) {
 }
