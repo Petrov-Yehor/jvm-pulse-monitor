@@ -8,10 +8,7 @@ import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 
-/**
- * GET /api/health
- * Отвечает {"status":"UP","uptimeMs":...}: сервер жив, работает столько-то мс.
- */
+
 public class HealthHandler implements HttpHandler {
 
     @Override
