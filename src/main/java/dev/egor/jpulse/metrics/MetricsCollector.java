@@ -3,8 +3,7 @@ package dev.egor.jpulse.metrics;
 public class MetricsCollector implements Runnable {
 
     private final JvmMetricsReader reader = new JvmMetricsReader();
-
-    private volatile MetricSnapshot latest;
+    private final MetricsHistory history = new MetricsHistory();
 
     public void start() {
         Thread thread = new Thread(this, "metrics-collector");
@@ -17,9 +16,10 @@ public class MetricsCollector implements Runnable {
         while (true) {
             try {
                 MetricSnapshot s = reader.read();
-                latest = s;
-                System.out.printf("Heap: %d / %d MB | CPU: %.1f%% | Threads: %d | GC: %d%n",
-                    s.heapUsedMb(), s.heapMaxMb(), s.cpuPercent(), s.threadCount(), s.gcCount());
+                history.add(s);
+                System.out.printf("Heap: %d / %d MB | CPU: %.1f%% | Threads: %d | GC: %d | History: %d%n",
+                    s.heapUsedMb(), s.heapMaxMb(), s.cpuPercent(), s.threadCount(), s.gcCount(),
+                    history.size());
             } catch (Exception e) {
                 System.err.println("Failed to collect metrics: " + e.getMessage());
             }
@@ -27,12 +27,12 @@ public class MetricsCollector implements Runnable {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                return; 
+                return;
             }
         }
     }
 
-    public MetricSnapshot getLatest() {
-        return latest;
+    public MetricsHistory getHistory() {
+        return history;
     }
 }
