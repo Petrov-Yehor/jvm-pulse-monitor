@@ -1,5 +1,6 @@
 package dev.egor.jpulse;
 import com.sun.net.httpserver.HttpServer;
+import dev.egor.jpulse.api.HealthHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,9 +22,9 @@ public class App {
                 out.write(body);
             }
         });
-
+        
+        server.createContext("/api/health", new HealthHandler());
         server.start();
         System.out.println("J-Pulse running on http://localhost:8080");
-        
     }
 }
