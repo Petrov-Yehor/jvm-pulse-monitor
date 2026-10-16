@@ -79,7 +79,21 @@ main {
     font-variant-numeric: tabular-nums;
 }
 
-.hint {
-    color: var(--muted);
+.charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+    gap: 16px;
     margin-top: 24px;
+}
+
+.chart-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.chart-box {
+    position: relative;
+    height: 200px;
 }
