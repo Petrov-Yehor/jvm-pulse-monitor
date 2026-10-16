@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>J-Pulse</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>J-Pulse</h1>
+    <span id="status" class="status">connecting...</span>
+</header>
+
+<main>
+    <div class="cards">
+        <div class="card">
+            <div class="label">Heap</div>
+            <div class="value" id="heap">–</div>
+        </div>
+        <div class="card">
+            <div class="label">CPU</div>
+            <div class="value" id="cpu">–</div>
+        </div>
+        <div class="card">
+            <div class="label">Threads</div>
+            <div class="value" id="threads">–</div>
+        </div>
+        <div class="card">
+            <div class="label">GC runs</div>
+            <div class="value" id="gc">–</div>
+        </div>
+    </div>
+    <p class="hint">Charts coming in the next step.</p>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
