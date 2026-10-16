@@ -31,9 +31,26 @@
             <div class="value" id="gc">–</div>
         </div>
     </div>
-    <p class="hint">Charts coming in the next step.</p>
+    <div class="charts">
+        <div class="chart-card">
+            <div class="label">Heap used (MB)</div>
+            <div class="chart-box"><canvas id="heapChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+            <div class="label">CPU (%)</div>
+            <div class="chart-box"><canvas id="cpuChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+            <div class="label">Threads</div>
+            <div class="chart-box"><canvas id="threadsChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+            <div class="label">GC runs per second</div>
+            <div class="chart-box"><canvas id="gcChart"></canvas></div>
+        </div>
+    </div>
 </main>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="/app.js"></script>
 </body>
 </html>
