@@ -3,8 +3,8 @@ package dev.egor.jpulse;
 import com.sun.net.httpserver.HttpServer;
 import dev.egor.jpulse.api.HealthHandler;
 import dev.egor.jpulse.api.MetricsHandler;
-import dev.egor.jpulse.api.RootHandler;
 import dev.egor.jpulse.metrics.MetricsCollector;
+import dev.egor.jpulse.api.StaticFileHandler;   
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -17,7 +17,7 @@ public class App {
         collector.start();
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/", new RootHandler());
+        server.createContext("/", new StaticFileHandler());
         server.createContext("/api/health", new HealthHandler());
         server.createContext("/api/metrics", new MetricsHandler(collector.getHistory()));
         server.start();
