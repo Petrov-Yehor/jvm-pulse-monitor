@@ -71,7 +71,12 @@ async function refresh() {
         updateChart(cpuChart, labels, snapshots.map(s => s.cpuPercent));
         updateChart(threadsChart, labels, snapshots.map(s => s.threadCount));
         updateChart(gcChart, labels, gcPerSecond);
+        updateChart(gcChart, labels, gcPerSecond);
 
+        const chaosResponse = await fetch("/api/chaos/status");
+        showChaosState(await chaosResponse.json());
+
+        status.textContent = "live";
         status.textContent = "live";
         status.className = "status ok";
     } catch (error) {
@@ -80,22 +85,25 @@ async function refresh() {
     }
 }
 
-async function chaos(action) {
-    const response = await fetch("/api/chaos/" + action, { method: "POST" });
-    const state = await response.json();
+function showChaosState(state) {
     const label = document.getElementById("chaosState");
-    
-    if (state.leak) {
-        label.textContent = "leak: ON";
+    label.textContent = "leak: " + (state.leak ? "ON" : "off") + " | cpu: " + (state.cpu ? "ON" : "off");
+    if (state.leak || state.cpu) {
         label.className = "chaos-state on";
     } else {
-        label.textContent = "leak: off";
         label.className = "chaos-state";
     }
 }
 
+async function chaos(action) {
+    const response = await fetch("/api/chaos/" + action, { method: "POST" });
+    showChaosState(await response.json());
+}
+
 document.getElementById("leakStart").addEventListener("click", () => chaos("leak/start"));
 document.getElementById("leakStop").addEventListener("click", () => chaos("leak/stop"));
+document.getElementById("cpuStart").addEventListener("click", () => chaos("cpu/start"));
+document.getElementById("cpuStop").addEventListener("click", () => chaos("cpu/stop"));
 document.getElementById("gcButton").addEventListener("click", () => chaos("gc"));
 
 refresh();
