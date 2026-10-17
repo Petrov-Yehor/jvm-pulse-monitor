@@ -80,5 +80,23 @@ async function refresh() {
     }
 }
 
+async function chaos(action) {
+    const response = await fetch("/api/chaos/" + action, { method: "POST" });
+    const state = await response.json();
+    const label = document.getElementById("chaosState");
+    
+    if (state.leak) {
+        label.textContent = "leak: ON";
+        label.className = "chaos-state on";
+    } else {
+        label.textContent = "leak: off";
+        label.className = "chaos-state";
+    }
+}
+
+document.getElementById("leakStart").addEventListener("click", () => chaos("leak/start"));
+document.getElementById("leakStop").addEventListener("click", () => chaos("leak/stop"));
+document.getElementById("gcButton").addEventListener("click", () => chaos("gc"));
+
 refresh();
 setInterval(refresh, 1000);

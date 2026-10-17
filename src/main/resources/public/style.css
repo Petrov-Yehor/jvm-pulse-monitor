@@ -97,3 +97,43 @@ main {
     position: relative;
     height: 200px;
 }
+
+.chaos {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 24px;
+}
+
+.chaos-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    background: var(--border);
+    color: var(--text);
+    border: 1px solid #3a3f4b;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #333845;
+}
+
+.chaos-state {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.chaos-state.on {
+    color: var(--bad);
+    font-weight: 600;
+}
