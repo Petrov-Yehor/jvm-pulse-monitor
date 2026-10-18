@@ -44,7 +44,9 @@ public class MetricsHandler implements HttpHandler {
             json.append("\"heapMaxMb\":").append(s.heapMaxMb()).append(",");
             json.append("\"cpuPercent\":").append(cpu).append(",");
             json.append("\"threadCount\":").append(s.threadCount()).append(",");
-            json.append("\"gcCount\":").append(s.gcCount());
+            json.append("\"gcCount\":").append(s.gcCount()).append(",");
+            json.append("\"latencyP50Ms\":").append(Math.round(s.latencyP50Ms() * 10) / 10.0).append(",");
+            json.append("\"latencyP95Ms\":").append(Math.round(s.latencyP95Ms() * 10) / 10.0);
             json.append("}");
         }
         json.append("]");
