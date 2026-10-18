@@ -53,25 +53,12 @@ The second row is the interesting one. A high heap is not a leak by itself. A le
 
 ```mermaid
 flowchart LR
-    subgraph JVM["J-Pulse (one JVM)"]
-        Reader["JvmMetricsReader<br/>(MXBeans)"]
-        Collector["MetricsCollector<br/>thread: metrics-collector"]
-        History["MetricsHistory<br/>last 300 snapshots"]
-        Tracker["LatencyTracker"]
-        Load["LoadGenerator<br/>thread: load-generator"]
-        Server["HttpServer :8080"]
-        Chaos["MemoryLeakChaos<br/>CpuBurnChaos"]
-
-        Collector -- "every 1 s" --> Reader
-        Collector --> History
-        Collector -- "takeStats()" --> Tracker
-        Load -- "GET /api/work" --> Server
-        Load -- "response time" --> Tracker
-        Server -- "/api/metrics" --> History
-        Server -- "/api/chaos/*" --> Chaos
-    end
-    Browser["Browser<br/>dashboard (Chart.js)"] -- "polls every 1 s" --> Server
+    JVM["JVM<br/>(MXBeans)"] -- "every 1 s" --> Collector["MetricsCollector"]
+    Collector --> History["MetricsHistory<br/>last 5 minutes"]
+    History -- "/api/metrics" --> Browser["Browser<br/>dashboard"]
 ```
+
+A background thread reads the JVM metrics every second and stores them in the history. The browser asks the server for that history every second and redraws the charts.
 
 ### Where the metrics come from
 
