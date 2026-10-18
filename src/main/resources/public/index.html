@@ -30,6 +30,10 @@
             <div class="label">GC runs</div>
             <div class="value" id="gc">–</div>
         </div>
+        <div class="card">
+            <div class="label">Latency p50 / p95</div>
+            <div class="value" id="latency">–</div>
+        </div>
     </div>
     <div class="chaos">
         <div class="label">Chaos</div>
@@ -58,6 +62,10 @@
         <div class="chart-card">
             <div class="label">GC runs per second</div>
             <div class="chart-box"><canvas id="gcChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+            <div class="label">Request latency p95 (ms)</div>
+            <div class="chart-box"><canvas id="latencyChart"></canvas></div>
         </div>
     </div>
 </main>
