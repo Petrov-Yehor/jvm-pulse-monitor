@@ -5,7 +5,9 @@ public record MetricSnapshot(
     long heapUsedMb,    
     long heapMaxMb,     
     double cpuPercent,  
-    int threadCount,    
-    long gcCount        
+    int threadCount,
+    long gcCount,
+    double latencyP50Ms,
+    double latencyP95Ms        
 ) {
 }
