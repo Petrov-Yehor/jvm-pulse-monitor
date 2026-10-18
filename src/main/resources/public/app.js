@@ -45,6 +45,7 @@ const heapChart = createChart("heapChart", "#4f8cff");
 const cpuChart = createChart("cpuChart", "#3ecf8e");
 const threadsChart = createChart("threadsChart", "#f5a524");
 const gcChart = createChart("gcChart", "#c678dd");
+const latencyChart = createChart("latencyChart", "#ef5350");
 
 async function refresh() {
     const status = document.getElementById("status");
@@ -62,6 +63,7 @@ async function refresh() {
         document.getElementById("cpu").textContent = latest.cpuPercent + " %";
         document.getElementById("threads").textContent = latest.threadCount;
         document.getElementById("gc").textContent = latest.gcCount;
+        document.getElementById("latency").textContent = latest.latencyP50Ms + " / " + latest.latencyP95Ms + " ms";
 
         const labels = snapshots.map(s => new Date(s.timestamp).toLocaleTimeString());
 
@@ -71,12 +73,11 @@ async function refresh() {
         updateChart(cpuChart, labels, snapshots.map(s => s.cpuPercent));
         updateChart(threadsChart, labels, snapshots.map(s => s.threadCount));
         updateChart(gcChart, labels, gcPerSecond);
-        updateChart(gcChart, labels, gcPerSecond);
-
+        updateChart(latencyChart, labels, snapshots.map(s => s.latencyP95Ms));
+        
         const chaosResponse = await fetch("/api/chaos/status");
         showChaosState(await chaosResponse.json());
 
-        status.textContent = "live";
         status.textContent = "live";
         status.className = "status ok";
     } catch (error) {
